@@ -1,0 +1,107 @@
+h1 {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400; }
+
+@font-face {
+  font-family: "Roboto";
+  src: url("../fonts/Roboto-Regular-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal; }
+
+body {
+  background: lightblue;
+  margin: 0; }
+
+.tictac__wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 308px;
+  margin: 80px auto;
+  background-color: darkblue;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column; }
+
+.cell {
+  margin-right: 4px;
+  margin-bottom: 4px;
+  width: 100px;
+  height: 100px;
+  background-color: lightblue;
+  position: relative; }
+  .cell__wrapper {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex; }
+
+.win {
+  width: 400px;
+  height: 350px;
+  background-color: #85cfe7;
+  position: absolute;
+  left: 50%;
+  -webkit-transform: translate(-50%);
+          transform: translate(-50%);
+  top: 50px;
+  border-radius: 40px;
+  display: none; }
+  .win__text {
+    text-align: center;
+    font-size: 60px; }
+
+.button {
+  text-align: center;
+  margin: 0 auto;
+  width: 150px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 25px;
+  border-radius: 30px;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s; }
+  .button:hover {
+    cursor: pointer;
+    background-color: lightblue; }
+
+.win__player {
+  text-align: center;
+  color: #4dac4d;
+  font-size: 25px; }
+
+.tic {
+  width: 3px;
+  height: 65px;
+  background-color: darkblue;
+  display: block;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%) rotate(-45deg);
+          transform: translate(-50%, -50%) rotate(-45deg); }
+  .tic::after {
+    position: absolute;
+    content: "";
+    width: 3px;
+    height: 65px;
+    left: 0;
+    bottom: 0;
+    -webkit-transform: rotate(90deg);
+            transform: rotate(90deg);
+    background-color: darkblue; }
+
+.toe {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  width: 50px;
+  height: 50px;
+  border: 3px solid darkblue;
+  border-radius: 50%; }
+
+/*# sourceMappingURL=main.css.map */
