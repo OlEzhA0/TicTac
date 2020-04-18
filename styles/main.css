@@ -32,11 +32,15 @@ body {
   width: 100px;
   height: 100px;
   background-color: lightblue;
-  position: relative; }
+  position: relative;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s; }
   .cell__wrapper {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex; }
+  .cell:hover {
+    background-color: #90cee2; }
 
 .win {
   width: 400px;
@@ -48,10 +52,13 @@ body {
           transform: translate(-50%);
   top: 50px;
   border-radius: 40px;
-  display: none; }
+  display: none;
+  -webkit-animation: winList 0.3s;
+          animation: winList 0.3s; }
   .win__text {
     text-align: center;
-    font-size: 60px; }
+    font-size: 60px;
+    color: darkblue; }
 
 .button {
   text-align: center;
@@ -81,7 +88,9 @@ body {
   left: 50%;
   top: 50%;
   -webkit-transform: translate(-50%, -50%) rotate(-45deg);
-          transform: translate(-50%, -50%) rotate(-45deg); }
+          transform: translate(-50%, -50%) rotate(-45deg);
+  -webkit-animation: animTic 0.3s;
+          animation: animTic 0.3s; }
   .tic::after {
     position: absolute;
     content: "";
@@ -91,7 +100,9 @@ body {
     bottom: 0;
     -webkit-transform: rotate(90deg);
             transform: rotate(90deg);
-    background-color: darkblue; }
+    background-color: darkblue;
+    -webkit-animation: animTic 0.3s;
+            animation: animTic 0.3s; }
 
 .toe {
   position: absolute;
@@ -102,6 +113,71 @@ body {
   width: 50px;
   height: 50px;
   border: 3px solid darkblue;
-  border-radius: 50%; }
+  border-radius: 50%;
+  -webkit-animation: animToe 0.3s;
+          animation: animToe 0.3s; }
+
+.no-hover:hover {
+  background-color: lightblue; }
+
+@-webkit-keyframes animTic {
+  0% {
+    height: 60px; }
+  60% {
+    height: 70px; }
+  100% {
+    height: 65px; } }
+
+@keyframes animTic {
+  0% {
+    height: 60px; }
+  60% {
+    height: 70px; }
+  100% {
+    height: 65px; } }
+
+@-webkit-keyframes animToe {
+  0% {
+    height: 45px;
+    width: 45px; }
+  60% {
+    height: 55px;
+    width: 55px; }
+  100% {
+    height: 50px;
+    width: 50px; } }
+
+@keyframes animToe {
+  0% {
+    height: 45px;
+    width: 45px; }
+  60% {
+    height: 55px;
+    width: 55px; }
+  100% {
+    height: 50px;
+    width: 50px; } }
+
+@-webkit-keyframes winList {
+  0% {
+    width: 380px;
+    height: 330px; }
+  50% {
+    width: 420px;
+    height: 360px; }
+  100% {
+    width: 400px;
+    height: 350px; } }
+
+@keyframes winList {
+  0% {
+    width: 380px;
+    height: 330px; }
+  50% {
+    width: 420px;
+    height: 360px; }
+  100% {
+    width: 400px;
+    height: 350px; } }
 
 /*# sourceMappingURL=main.css.map */
