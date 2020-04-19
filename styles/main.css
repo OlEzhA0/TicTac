@@ -8,6 +8,62 @@ h1 {
   font-weight: normal;
   font-style: normal; }
 
+.homoku {
+  background-color: #fff; }
+  .homoku__wrapper {
+    margin: 20px auto;
+    width: 608px; }
+
+.number-player {
+  text-align: center;
+  font-size: 25px;
+  margin: 5px 0 0; }
+
+.homoku-cell {
+  width: 32px;
+  height: 32px;
+  border: 1px solid darkblue;
+  background-color: #eee;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  position: relative;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box; }
+  .homoku-cell:hover {
+    background-color: #c09936;
+    cursor: pointer; }
+  .homoku-cell__wrapper {
+    width: 608px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex; }
+
+.no-hover__homoku {
+  background-color: #e6c97f; }
+
+.chip {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%); }
+
+.win__homoku {
+  width: 608px;
+  height: 609px;
+  background-color: #e6c97f;
+  position: absolute;
+  top: 53px;
+  left: 50%;
+  -webkit-transform: translate(-50%);
+          transform: translate(-50%);
+  display: none; }
+
+.win__text-homoku {
+  text-align: center;
+  margin-top: 200px;
+  font-size: 40px; }
+
 body {
   background: lightblue;
   margin: 0; }
@@ -119,6 +175,25 @@ body {
 
 .no-hover:hover {
   background-color: lightblue; }
+
+.go-homoku {
+  margin-top: 150px;
+  text-align: center; }
+  .go-homoku__link {
+    text-decoration: none;
+    color: darkblue;
+    font-size: 35px; }
+  .go-homoku__text {
+    display: inline-block;
+    height: 60px;
+    width: 280px;
+    line-height: 60px;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+    border-radius: 30px; }
+    .go-homoku__text:hover {
+      color: lightblue;
+      background-color: darkblue; }
 
 @-webkit-keyframes animTic {
   0% {

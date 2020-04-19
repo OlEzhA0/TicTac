@@ -5,18 +5,20 @@ const win = document.querySelector('.win');
 const text = document.querySelector('.win__player');
 let firstDraw = false;
 const countForWin = 3;
-
+let currentPlayer = 1;
+let pastPlayer = 2;
+let moveCounter = 0;
+const section = document.querySelector('.tictac__wrapper');
 initGame();
 
 function initGame() {
-  const section = document.querySelector('.tictac__wrapper');
-  let moveCounter = 0;
-  const myField = [
+  debugger
+
+  let myField = [
     [0, 0, 0],
     [0, 0, 0],
     [0, 0, 0],
   ];
-  let currentPlayer = 1;
 
   if (!firstDraw) {
     firstDraw = true;
@@ -24,55 +26,67 @@ function initGame() {
   }
 
   section.addEventListener('click', event => {
+    debugger
     const selectedCell = event.target.closest('.cell');
-    selectedCell.classList.add('no-hover')
+    const noHover = event.target.closest('.no-hover');
     if (!selectedCell) {
       return;
     }
+
+    if (noHover) {
+      return
+    }
+
+    if (moveCounter === 0) {
+      myField = [
+        [0, 0, 0],
+        [0, 0, 0],
+        [0, 0, 0],
+      ];
+    }
+
+    selectedCell.classList.add('no-hover');
 
     const x = selectedCell.dataset.x;
     const y = selectedCell.dataset.y;
     const coordsArray = [+x, +y];
 
     if (currentPlayer === 1) {
-      if (myField[x][y] !== 0) {
-        return;
-      } else {
-        myField[x][y] = currentPlayer;
-        moveCounter++;
-      }
-
+      myField[x][y] = currentPlayer;
+      console.log(myField)
+      console.log(myField[x][y])
       selectedCell.innerHTML = `<span class="tic"></span>`;
+      moveCounter++;
 
       if (moveCounter > 4) {
         checkDraw(myField);
-        horizontalySearch(myField, coordsArray, currentPlayer);
-        verticalySearch(myField, coordsArray, currentPlayer);
-        curveRightSearch(myField, coordsArray, currentPlayer);
-        curveLeftSearch(myField, coordsArray, currentPlayer);
-      }
+        horizontalySearch(myField, coordsArray, currentPlayer, pastPlayer);
+        verticalySearch(myField, coordsArray, currentPlayer, pastPlayer);
+        curveRightSearch(myField, coordsArray, currentPlayer, pastPlayer);
+        curveLeftSearch(myField, coordsArray, currentPlayer, pastPlayer);
 
+
+      }
+      pastPlayer = currentPlayer;
       currentPlayer = 2;
 
       return;
-    } else if (currentPlayer === 2) {
-      if (myField[x][y] !== 0) {
-        return;
-      } else {
-        myField[x][y] = currentPlayer;
-        moveCounter++;
-      }
+    }
 
+    if (currentPlayer === 2) {
+      myField[x][y] = currentPlayer;
       selectedCell.innerHTML = `<span class="toe"></span>`;
+      moveCounter++;
 
       if (moveCounter > 4) {
         checkDraw(myField);
-        horizontalySearch(myField, coordsArray, currentPlayer);
-        verticalySearch(myField, coordsArray, currentPlayer);
-        curveRightSearch(myField, coordsArray, currentPlayer);
-        curveLeftSearch(myField, coordsArray, currentPlayer);
+        horizontalySearch(myField, coordsArray, currentPlayer, pastPlayer);
+        verticalySearch(myField, coordsArray, currentPlayer, pastPlayer);
+        curveRightSearch(myField, coordsArray, currentPlayer, pastPlayer);
+        curveLeftSearch(myField, coordsArray, currentPlayer, pastPlayer);
       }
 
+      pastPlayer = currentPlayer;
       currentPlayer = 1;
 
       return;
@@ -82,31 +96,33 @@ function initGame() {
 }
 
 function checkDraw(field) {
-  let counter = 0;
-
   for (let i = 0; i < field.length; i++) {
     for (let j = 0; j < field[i].length; j++) {
       if (field[i][j] === 0) {
-        counter++;
+        return;
       }
     }
   }
 
-  if (counter === 0) {
-    counter = 0;
-    text.textContent = `No one won!`;
-    win.style.display = 'block';
+  text.textContent = `No one won!`;
+  win.style.display = 'block';
 
-    return;
-  }
+  return;
 }
 
-function horizontalySearch(field, coords, player) {
-  const section = document.querySelector('.tictac__wrapper');
+function horizontalySearch(field, coords, player, pastMove) {
   const [x, y] = coords;
   let sumHoriz = 0;
 
   for (let i = y; i < countForWin; i++) {
+    if (field[x][i + 1] === 0) {
+      return;
+    }
+
+    if (field[x][i + 1] === pastMove) {
+      return;
+    }
+
     if (field[x][i + 1] && field[x][i + 1] === player) {
       sumHoriz++;
     }
@@ -120,27 +136,23 @@ function horizontalySearch(field, coords, player) {
 
   sumHoriz++;
 
-  if (sumHoriz !== countForWin || sumHoriz < countForWin) {
-    return;
-  }
-
-  if (sumHoriz === countForWin) {
-    sumHoriz = 0;
-    text.textContent = `Player ${player} won`;
-    win.style.display = 'block';
-    clearField(section);
-
-    return;
+  if (sumHoriz !== countForWin) {
+    return
+  } else {
+    checkAnswer(player, section);
   }
 }
 
-function verticalySearch(field, coords, player) {
-  const section = document.querySelector('.tictac__wrapper');
+function verticalySearch(field, coords, player, pastMove) {
   const [x, y] = coords;
   let sumVert = 0;
 
   for (let i = x; i < countForWin; i++) {
     if (i + 1 === field.length) {
+      continue;
+    }
+
+    if (field[i + 1][y] === pastMove || field[i + 1][y] === 0) {
       continue;
     }
 
@@ -157,27 +169,25 @@ function verticalySearch(field, coords, player) {
 
   sumVert++;
 
-  if (sumVert !== countForWin || sumVert < countForWin) {
-    return;
+  if (sumVert !== countForWin) {
+    return
+  } else {
+    checkAnswer(player, section);
   }
 
-  if (sumVert === countForWin) {
-    sumVert = 0;
-    text.textContent = `Player ${player} won`;
-    win.style.display = 'block';
-    clearField(section);
-
-    return;
-  }
 }
 
-function curveRightSearch(field, coords, player) {
-  const section = document.querySelector('.tictac__wrapper');
+function curveRightSearch(field, coords, player, pastMove) {
+
   const [x] = coords;
   let sumCurveR = 0;
 
   for (let i = x; i < countForWin; i++) {
     if (i + 1 === field.length) {
+      continue;
+    }
+
+    if (field[i + 1][i + 1] === 0 || field[i + 1][i + 1] === pastMove) {
       continue;
     }
 
@@ -187,29 +197,24 @@ function curveRightSearch(field, coords, player) {
   }
 
   for (let i = x; i > 0; i--) {
+    if (field[i - 1][i - 1] === 0 || field[i - 1][i - 1] === pastMove) {
+      continue;
+    }
+
     if (field[i - 1][i - 1] && field[i - 1][i - 1] === player) {
       sumCurveR++;
     }
   }
 
   sumCurveR++;
-
-  if (sumCurveR !== countForWin || sumCurveR < countForWin) {
-    return;
-  }
-
-  if (sumCurveR === countForWin) {
-    sumCurveR = 0;
-    text.textContent = `Player ${player} won`;
-    win.style.display = 'block';
-    clearField(section);
-
-    return;
+  if (sumCurveR !== countForWin) {
+    return
+  } else {
+    checkAnswer(player, section);
   }
 }
 
-function curveLeftSearch(field, coords, player) {
-  const section = document.querySelector('.tictac__wrapper');
+function curveLeftSearch(field, coords, player, pastMove) {
   const [x, y] = coords;
   let sumCurveL = 0;
   let yCoordUp = y;
@@ -224,6 +229,11 @@ function curveLeftSearch(field, coords, player) {
       continue;
     }
 
+    if (field[i + 1][yCoordUp - 1] === 0
+      || field[i + 1][yCoordUp - 1] === pastMove) {
+      continue;
+    }
+
     if (field[i + 1][yCoordUp - 1] === player) {
       sumCurveL++;
     }
@@ -232,6 +242,11 @@ function curveLeftSearch(field, coords, player) {
 
   for (let i = x; i > 0; i--) {
     if (yCoordDown === field[x].length) {
+      continue;
+    }
+
+    if (field[i - 1][yCoordDown + 1] === 0
+      || field[i - 1][yCoordDown + 1] === pastMove) {
       continue;
     }
 
@@ -244,18 +259,19 @@ function curveLeftSearch(field, coords, player) {
 
   sumCurveL++;
 
-  if (sumCurveL !== countForWin || sumCurveL < countForWin) {
+  if (sumCurveL !== countForWin) {
     return;
+  } else {
+    checkAnswer(player, section);
   }
+}
 
-  if (sumCurveL === countForWin) {
-    sumCurveL = 0;
-    text.textContent = `Player ${player} won`;
-    win.style.display = 'block';
-    clearField(section);
+function checkAnswer(playerNo, section) {
+  text.textContent = `Player ${playerNo} won`;
+  win.style.display = 'block';
+  clearField(section);
 
-    return;
-  }
+  return;
 }
 
 function drawField(field, element) {
@@ -296,14 +312,10 @@ function clearField(element) {
 }
 
 button.addEventListener('click', () => {
-  const section = document.querySelector('.tictac__wrapper');
-  const myField = [
-    [0, 0, 0],
-    [0, 0, 0],
-    [0, 0, 0],
-  ];
-
-  drawField(myField, section);
-  win.style.display = 'none';
+  moveCounter = 0;
+  currentPlayer = 1;
+  pastPlayer = 2;
+  firstDraw = false;
   initGame();
+  win.style.display = 'none';
 });
