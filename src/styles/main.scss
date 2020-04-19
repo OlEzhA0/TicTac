@@ -1,6 +1,7 @@
 @import "utils";
 @import "fonts";
 @import "typography";
+@import "homoku";
 
 body {
   background: lightblue;
@@ -113,6 +114,29 @@ body {
   &:hover {
     background-color: lightblue;
   }
+}
+
+.go-homoku {
+  margin-top: 150px;
+  text-align: center;
+  &__link {
+    text-decoration: none;
+    color: darkblue;
+    font-size: 35px;
+  }
+  &__text {
+    display: inline-block;
+    height: 60px;
+    width: 280px;
+    line-height: 60px;
+    transition: all 0.3s;
+    border-radius: 30px;
+    &:hover {
+      color: lightblue;
+      background-color: darkblue;
+    }
+  }
+
 }
 
 @keyframes animTic {
