@@ -3,6 +3,7 @@
 const button = document.querySelector('.button');
 const win = document.querySelector('.win');
 const text = document.querySelector('.win__player');
+const winText = document.querySelector('.win__text')
 let firstDraw = false;
 const countForWin = 3;
 let currentPlayer = 1;
@@ -103,7 +104,7 @@ function checkDraw(field) {
       }
     }
   }
-
+  winText.textContent = `Draw`
   text.textContent = `No one won!`;
   win.style.display = 'block';
 
