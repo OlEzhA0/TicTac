@@ -59,3 +59,24 @@
   margin-top: 200px;
   font-size: 40px;
 }
+
+.back {
+  margin: 40px auto;
+  width: 200px;
+  text-align: center;
+  height: 40px;
+  line-height: 40px;
+  transition: all 0.3s;
+  border-radius: 15px;
+
+  &:hover {
+    cursor: pointer;
+    background-color: lightblue;
+  }
+
+  &__link {
+    text-decoration: none;
+    font-size: 20px;
+    color: #000;
+  }
+}

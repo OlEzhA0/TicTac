@@ -3,18 +3,16 @@
 const button = document.querySelector('.button');
 const win = document.querySelector('.win');
 const text = document.querySelector('.win__player');
-const winText = document.querySelector('.win__text')
 let firstDraw = false;
 const countForWin = 3;
 let currentPlayer = 1;
 let pastPlayer = 2;
 let moveCounter = 0;
 const section = document.querySelector('.tictac__wrapper');
+
 initGame();
 
 function initGame() {
-  debugger
-
   let myField = [
     [0, 0, 0],
     [0, 0, 0],
@@ -27,15 +25,15 @@ function initGame() {
   }
 
   section.addEventListener('click', event => {
-    debugger
     const selectedCell = event.target.closest('.cell');
     const noHover = event.target.closest('.no-hover');
+
     if (!selectedCell) {
       return;
     }
 
     if (noHover) {
-      return
+      return;
     }
 
     if (moveCounter === 0) {
@@ -54,8 +52,6 @@ function initGame() {
 
     if (currentPlayer === 1) {
       myField[x][y] = currentPlayer;
-      console.log(myField)
-      console.log(myField[x][y])
       selectedCell.innerHTML = `<span class="tic"></span>`;
       moveCounter++;
 
@@ -65,8 +61,6 @@ function initGame() {
         verticalySearch(myField, coordsArray, currentPlayer, pastPlayer);
         curveRightSearch(myField, coordsArray, currentPlayer, pastPlayer);
         curveLeftSearch(myField, coordsArray, currentPlayer, pastPlayer);
-
-
       }
       pastPlayer = currentPlayer;
       currentPlayer = 2;
@@ -93,7 +87,6 @@ function initGame() {
       return;
     }
   });
-
 }
 
 function checkDraw(field) {
@@ -104,8 +97,7 @@ function checkDraw(field) {
       }
     }
   }
-  winText.textContent = `Draw`
-  text.textContent = `No one won!`;
+  text.textContent = `Ничья`;
   win.style.display = 'block';
 
   return;
@@ -138,7 +130,7 @@ function horizontalySearch(field, coords, player, pastMove) {
   sumHoriz++;
 
   if (sumHoriz !== countForWin) {
-    return
+    return;
   } else {
     checkAnswer(player, section);
   }
@@ -171,15 +163,13 @@ function verticalySearch(field, coords, player, pastMove) {
   sumVert++;
 
   if (sumVert !== countForWin) {
-    return
+    return;
   } else {
     checkAnswer(player, section);
   }
-
 }
 
 function curveRightSearch(field, coords, player, pastMove) {
-
   const [x] = coords;
   let sumCurveR = 0;
 
@@ -208,8 +198,9 @@ function curveRightSearch(field, coords, player, pastMove) {
   }
 
   sumCurveR++;
+
   if (sumCurveR !== countForWin) {
-    return
+    return;
   } else {
     checkAnswer(player, section);
   }
@@ -267,10 +258,10 @@ function curveLeftSearch(field, coords, player, pastMove) {
   }
 }
 
-function checkAnswer(playerNo, section) {
+function checkAnswer(playerNo, sctn) {
   text.textContent = `Player ${playerNo} won`;
   win.style.display = 'block';
-  clearField(section);
+  clearField(sctn);
 
   return;
 }
