@@ -109,11 +109,11 @@ function horizontalySearch(field, coords, player, pastMove) {
 
   for (let i = y; i < countForWin; i++) {
     if (field[x][i + 1] === 0) {
-      return;
+      break;
     }
 
     if (field[x][i + 1] === pastMove) {
-      return;
+      break;
     }
 
     if (field[x][i + 1] && field[x][i + 1] === player) {
@@ -142,11 +142,11 @@ function verticalySearch(field, coords, player, pastMove) {
 
   for (let i = x; i < countForWin; i++) {
     if (i + 1 === field.length) {
-      continue;
+      break;
     }
 
     if (field[i + 1][y] === pastMove || field[i + 1][y] === 0) {
-      continue;
+      break;
     }
 
     if (field[i + 1][y] === player) {
@@ -170,29 +170,37 @@ function verticalySearch(field, coords, player, pastMove) {
 }
 
 function curveRightSearch(field, coords, player, pastMove) {
-  const [x] = coords;
+  const [x, y] = coords;
   let sumCurveR = 0;
+  let countCurve = 1;
 
   for (let i = x; i < countForWin; i++) {
     if (i + 1 === field.length) {
-      continue;
+      break;
     }
 
-    if (field[i + 1][i + 1] === 0 || field[i + 1][i + 1] === pastMove) {
-      continue;
+    if (field[i + 1][y + countCurve] === 0
+      || field[i + 1][i + countCurve] === pastMove) {
+      break;
     }
 
-    if (field[i + 1][i + 1] === player) {
+    if (field[i + 1][i + countCurve] === player) {
+      countCurve++;
       sumCurveR++;
     }
   }
 
+  countCurve = 1;
+
   for (let i = x; i > 0; i--) {
-    if (field[i - 1][i - 1] === 0 || field[i - 1][i - 1] === pastMove) {
-      continue;
+    if (field[i - 1][y - countCurve] === 0
+      || field[i - 1][y - countCurve] === pastMove) {
+      break;
     }
 
-    if (field[i - 1][i - 1] && field[i - 1][i - 1] === player) {
+    if (field[i - 1][y - countCurve]
+      && field[i - 1][y - countCurve] === player) {
+      countCurve++;
       sumCurveR++;
     }
   }
@@ -209,42 +217,35 @@ function curveRightSearch(field, coords, player, pastMove) {
 function curveLeftSearch(field, coords, player, pastMove) {
   const [x, y] = coords;
   let sumCurveL = 0;
-  let yCoordUp = y;
-  let yCoordDown = y;
+  let countCurve = 1;
 
   for (let i = x; i < countForWin; i++) {
-    if (yCoordUp <= 0) {
-      continue;
-    }
-
     if (i + 1 === field.length) {
-      continue;
+      break;
     }
 
-    if (field[i + 1][yCoordUp - 1] === 0
-      || field[i + 1][yCoordUp - 1] === pastMove) {
-      continue;
+    if (field[i + 1][y - countCurve] === 0
+      || field[i + 1][y - countCurve] === pastMove) {
+        break;
     }
 
-    if (field[i + 1][yCoordUp - 1] === player) {
+    if (field[i + 1][y - countCurve] === player) {
+      countCurve++;
       sumCurveL++;
     }
-    yCoordUp--;
   }
 
+  countCurve = 1;
+
   for (let i = x; i > 0; i--) {
-    if (yCoordDown === field[x].length) {
-      continue;
+    if (field[i - 1][y + countCurve] === 0
+      || field[i - 1][y + countCurve] === pastMove) {
+        break;
     }
 
-    if (field[i - 1][yCoordDown + 1] === 0
-      || field[i - 1][yCoordDown + 1] === pastMove) {
-      continue;
-    }
-
-    if (field[i - 1][yCoordDown + 1]
-      && field[i - 1][yCoordDown + 1] === player) {
-      yCoordDown++;
+    if (field[i - 1][y + countCurve]
+      && field[i - 1][y + countCurve] === player) {
+      countCurve++;
       sumCurveL++;
     }
   }
